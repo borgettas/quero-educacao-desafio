@@ -18,7 +18,7 @@ def request_get_data(url: str):
         print(f"❌ Request Error - {response.status_code}")
 
 
-def list_str_dict_to_list_dict(data: str) -> list:
+def str_dict_to_list_dict(data: str) -> list:
 
     list_dict = []
 
@@ -32,9 +32,18 @@ def list_str_dict_to_list_dict(data: str) -> list:
     return list_dict
 
 
+def list_dict_to_dataframe(data: list) -> pd.DataFrame:
+	
+    df = pd.DataFrame.from_records(data)
+    
+    return df
+
+
 def main():
     data = request_get_data(DATA_URL)
-    splited_data = list_str_dict_to_list_dict(data=data)
+    splited_data = str_dict_to_list_dict(data=data)
+
+    df = list_dict_to_dataframe(data=splited_data)
 
 
 if  __name__ == "__main__":
