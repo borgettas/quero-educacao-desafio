@@ -11,7 +11,10 @@ build:
 
 .PHONY: run
 run:
-	docker run -it --name $(container) --rm $(image)
+	docker run -it \
+		--name $(container) \
+		--volume $$(pwd)/sre-intern-test:/home/sre-intern-test \
+		--rm $(image)
 
 
 .PHONY: start
