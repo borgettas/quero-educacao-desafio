@@ -36,3 +36,8 @@ finish:
 restart:
 	make finish;
 	make start;
+
+
+.PHONY: test
+test:
+	pytest --verbose tests/;
