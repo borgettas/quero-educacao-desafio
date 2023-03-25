@@ -1,6 +1,9 @@
 import json
 import pandas as pd
 import requests
+import warnings
+
+warnings.simplefilter(action='ignore', category=FutureWarning)
 
 
 DATA_URL = "https://s3.amazonaws.com/gupy5/production/companies/41683/emails/1679437007669/8408fe80-c80f-11ed-80da-7d3cd1fee4b4/log.txt"
@@ -46,7 +49,7 @@ def transform_type_columns(df: pd.DataFrame) -> pd.DataFrame:
     return df
 
 
-def generate_summary_erros_success(df: pd.DataFrame) -> list[dict]:
+def generate_summary_erros_success(df: pd.DataFrame) -> str:
 
     df["statusCode_success"] = df.apply(lambda row: 1 if row.statusCode >= 200 and row.statusCode <= 399 else 0, axis = 1)
     df["statusCode_error"] = df.apply(lambda row: 1 if row.statusCode >= 400 and row.statusCode <= 599 else 0, axis = 1)
@@ -70,7 +73,7 @@ def main():
     summary = generate_summary_erros_success(df=df)
 
     print(
-        type(summary)
+        summary
     ) 
 
 
