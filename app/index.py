@@ -51,13 +51,13 @@ def transform_type_columns(df: pd.DataFrame) -> pd.DataFrame:
     return df
 
 
-def generate_summary_erros_success(df: pd.DataFrame) -> str:
+def generate_summary_erros_success(df: pd.DataFrame) -> list:
 
     df["statusCode_success"] = df.apply(lambda row: 1 if row.statusCode >= 200 and row.statusCode <= 399 else 0, axis = 1)
     df["statusCode_error"] = df.apply(lambda row: 1 if row.statusCode >= 400 and row.statusCode <= 599 else 0, axis = 1)
 
 
-    df_summary = df.groupby("path")["statusCode_error", "statusCode_success"].agg('sum').reset_index()
+    df_summary = df.groupby(["path"])[["statusCode_error", "statusCode_success"]].agg('sum').reset_index()
 
     df_summary["errorCount"] = df_summary.apply(lambda row: round((row.statusCode_error / (row.statusCode_error + row.statusCode_success) * 100), 2), axis = 1)
     df_summary["successCount"] = df_summary.apply(lambda row: round((row.statusCode_success / (row.statusCode_error + row.statusCode_success) * 100), 2), axis = 1)

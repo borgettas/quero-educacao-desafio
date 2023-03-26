@@ -60,4 +60,4 @@ def test_generate_summary_erros_success():
 
     response = generate_summary_erros_success(df=df)
 
-    assert isinstance(response, str)
+    assert isinstance(response, list)
