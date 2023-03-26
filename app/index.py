@@ -12,7 +12,10 @@ PATH_EXPORT_DATA = "sre-intern-test"
 
 
 def request_get_data(url: str):
-
+    """
+        Request in URL to get data.
+    """
+    
     response = requests.get(DATA_URL)
     
     if response.status_code == 200:
@@ -24,6 +27,9 @@ def request_get_data(url: str):
 
 
 def str_dict_to_list_dict(data: str) -> list:
+    """
+        Transform strings who are dictionary("str(list[dict])") in list[dict].
+    """
 
     list_dict = []
 
@@ -38,6 +44,9 @@ def str_dict_to_list_dict(data: str) -> list:
 
 
 def list_dict_to_dataframe(data: list) -> pd.DataFrame:
+    """
+        Transform list[dict] in DataFrame.
+    """
 	
     df = pd.DataFrame.from_records(data)
     
@@ -45,6 +54,9 @@ def list_dict_to_dataframe(data: list) -> pd.DataFrame:
 
 
 def transform_type_columns(df: pd.DataFrame) -> pd.DataFrame:
+    """
+        Transforms the type of columns in the DataFrame.
+    """
     
     df["statusCode"] = df["statusCode"].astype(int)
 
@@ -52,6 +64,9 @@ def transform_type_columns(df: pd.DataFrame) -> pd.DataFrame:
 
 
 def generate_summary_erros_success(df: pd.DataFrame) -> list:
+    """
+        Analyze data from DataFrame for generate new columns based on the analytics.
+    """
 
     df["statusCode_success"] = df.apply(lambda row: 1 if row.statusCode >= 200 and row.statusCode <= 399 else 0, axis = 1)
     df["statusCode_error"] = df.apply(lambda row: 1 if row.statusCode >= 400 and row.statusCode <= 599 else 0, axis = 1)
@@ -67,7 +82,11 @@ def generate_summary_erros_success(df: pd.DataFrame) -> list:
     return list_dict
 
 
-def prepare_data():
+def prepare_data() -> list:
+    """
+        Organize functions for just get the data.
+    """
+    
     data = request_get_data(DATA_URL)
     splited_data = str_dict_to_list_dict(data=data)
     df = list_dict_to_dataframe(data=splited_data)
@@ -78,6 +97,9 @@ def prepare_data():
 
 
 def export_to_json(data: dict, path: str) -> None:
+    """
+        Generate file .json with the data.
+    """
 
     with open(f"{path}/output.json", "w") as file:
         json.dump(data, file, indent=4)
@@ -86,6 +108,9 @@ def export_to_json(data: dict, path: str) -> None:
 
 
 def summary_in_terminal(data: dict) -> None:
+    """
+        Print output data in terminal.
+    """
 
     print(
         json.dumps(data, indent=4)
@@ -94,7 +119,10 @@ def summary_in_terminal(data: dict) -> None:
     return None
 
 
-def read_args():
+def read_args() -> None:
+    """
+        Construct Argparse and get options from CLI.
+    """
 
     parser = argparse.ArgumentParser(description="Syncer")
     parser._action_groups.pop()

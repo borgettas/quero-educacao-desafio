@@ -1,3 +1,7 @@
+<img src="https://gestao.quero.com/wp-content/uploads/2020/01/Logo-Quero-Institucional-Colorido-Tela-RGB-2.png" width="250px" alt="Logo Quero Educação">
+
+</br>
+
 # 📄 Documentação
 
 ## Objetivo geral
