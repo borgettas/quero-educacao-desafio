@@ -3,7 +3,19 @@
         "path": "/",
         "errorCount": 99.59,
         "successCount": 0.41
-
+    },
+    {
+        "path": "/api/path3",
+        "errorCount": 99.21,
+        "successCount": 0.79
+    },
+    {
+        "path": "/path1",
+        "errorCount": 100.0,
+        "successCount": 0.0
+    },
+    {
+        "path": "/path2",
         "errorCount": 99.61,
         "successCount": 0.39
     }
