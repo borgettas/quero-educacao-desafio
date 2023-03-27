@@ -1,7 +1,5 @@
 FROM python:3.8
 
-RUN useradd --create-home --shell /bin/bash app_user
-
 WORKDIR /home
 
 COPY requirements.txt ./
@@ -11,7 +9,7 @@ RUN pip install --no-cache-dir -r requirements.txt
 
 RUN mkdir -p sre-intern-test
 
-USER app_user
+USER root
 
 COPY . .
 
