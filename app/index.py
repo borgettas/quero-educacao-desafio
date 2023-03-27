@@ -68,14 +68,12 @@ def generate_summary_erros_success(df: pd.DataFrame) -> list:
         Analyze data from DataFrame for generate new columns based on the analytics.
     """
 
-    df["statusCode_success"] = df.apply(lambda row: 1 if row.statusCode >= 200 and row.statusCode <= 399 else 0, axis = 1)
-    df["statusCode_error"] = df.apply(lambda row: 1 if row.statusCode >= 400 and row.statusCode <= 599 else 0, axis = 1)
+    df["successCount"] = df.apply(lambda row: 1 if row.statusCode >= 200 and row.statusCode <= 399 else 0, axis = 1)
+    df["errorCount"] = df.apply(lambda row: 1 if row.statusCode >= 400 and row.statusCode <= 599 else 0, axis = 1)
 
 
-    df_summary = df.groupby(["path"])[["statusCode_error", "statusCode_success"]].agg('sum').reset_index()
+    df_summary = df.groupby(["path"])[["errorCount", "successCount"]].agg('sum').reset_index()
 
-    df_summary["errorCount"] = df_summary.apply(lambda row: round((row.statusCode_error / (row.statusCode_error + row.statusCode_success) * 100), 2), axis = 1)
-    df_summary["successCount"] = df_summary.apply(lambda row: round((row.statusCode_success / (row.statusCode_error + row.statusCode_success) * 100), 2), axis = 1)
 
     list_dict = df_summary[["path",  "errorCount", "successCount"]].to_dict(orient = 'records')
 
@@ -132,14 +130,14 @@ def read_args() -> None:
     options.add_argument(
         "-e", "--export",
         action="store_true",
-        help="string DSN de conexão para com a DATABASE",
+        help="Export data to output file.",
         required=False
     )
 
     options.add_argument(
         "-s", "--summary",
         action="store_true",
-        help="string DSN de conexão para com a DATABASE",
+        help="Print summary on terminal.",
         required=False
     )
 
