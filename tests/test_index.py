@@ -7,6 +7,7 @@ from app.index import (
     str_dict_to_list_dict,
     transform_type_columns
 )
+from datatest import validate
 
 
 def test_request_get_data():
@@ -47,6 +48,9 @@ def  test_transform_type_columns():
     ]
 
     df = pd.DataFrame.from_records(list_dict)
+    df = transform_type_columns(df=df)
+
+    validate(df["statusCode"], int)
 
 
 def test_generate_summary_erros_success():
